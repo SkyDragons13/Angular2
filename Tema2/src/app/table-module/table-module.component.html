@@ -1,0 +1,47 @@
+<div class="main-container">
+    <nz-table
+      #basicTable
+      [nzData]="(users$ | async) ?? []"
+      [nzPageSize]="8"
+      [nzTotal]="(users$ | async)?.length ?? 0"
+      [(nzPageIndex)]="pageIndex"
+      (nzPageIndexChange)="onPageChange($event)"
+    >
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && (users$ | async)?.length">
+        <tr *ngFor="let data of (users$ | async)?.slice((pageIndex - 1) * 8, pageIndex * 8) ?? []">
+          <td>{{ data.email }}</td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.adress }}</td>
+          <td>
+            <span
+              nz-icon
+              nzType="edit"
+              nzTheme="outline"
+              style="cursor: pointer;"
+              (click)="toggleAddUser()"
+            ></span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  
+    <div *ngIf="isLoading" id="spinner">
+      <nz-spin [nzSize]="'large'" nzSimple></nz-spin>
+    </div>
+  
+    <button nz-button nzType="primary" (click)="toggleAddUser()">
+      Add New User
+    </button>
+    <app-create-user-form *ngIf="isAddNewUserFormVisible"></app-create-user-form>
+  </div>
+  

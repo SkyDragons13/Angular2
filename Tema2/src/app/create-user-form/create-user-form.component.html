@@ -1,0 +1,71 @@
+<div *ngIf="userForm">
+    <form nz-form [formGroup]="userForm" (ngSubmit)="addNewUser()">
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzPrefixIcon="user">
+                    <input formControlName="Email" nz-input placeholder="Input email" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <p *ngIf="
+        email?.touched &&
+        userForm.controls['Email'].hasError('invalidEmail')
+      " class="error-message">
+            Please enter a valid email 
+        </p>
+        <p *ngIf="
+        email?.touched &&
+        userForm.controls['Email'].hasError('required')
+      " class="error-message">
+            This field is required
+        </p>
+
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzPrefixIcon="user">
+                    <input formControlName="Name" nz-input placeholder="Input name " />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <p *ngIf="
+        name?.touched &&
+        userForm.controls['Name'].hasError('invalidSymbols')
+      " class="error-message">
+            Only letters are allowed
+        </p>
+        <p *ngIf="
+        name?.touched && userForm.controls['Name'].hasError('required')
+      " class="error-message">
+            This field is required
+        </p>
+
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzPrefixIcon="number">
+                    <input formControlName="Age" nz-input placeholder="Input age" type="number" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <p *ngIf="age?.touched && userForm.controls['Age'].hasError('required')" class="error-message">
+            This field is required
+        </p>
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzPrefixIcon="home">
+                    <input formControlName="Address" nz-input placeholder="Input address" />
+                </nz-input-group>
+                <p *ngIf="address?.touched && userForm.controls['Address'].hasError('required')" class="error-message">
+                    This field is required
+                </p>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-control>
+                <button nz-button nzType="primary" [disabled]="!userForm.valid">
+                    Submit
+                </button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
