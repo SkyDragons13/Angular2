@@ -10,7 +10,7 @@ export function LetterValidator(
 ): { [key: string]: any } | null {
   if (!control.value) return null;
 
-  const reg = new RegExp('^[a-zA-Z]+$');
+  const reg = new RegExp('^[a-zA-Z]+[0-9]*$');
 
   return reg.test(control.value) ? null : { invalidSymbols: true };
 }

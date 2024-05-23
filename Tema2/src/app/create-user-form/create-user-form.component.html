@@ -1,5 +1,5 @@
 <div *ngIf="userForm">
-    <form nz-form [formGroup]="userForm" (ngSubmit)="addNewUser()">
+    <form nz-form [formGroup]="userForm" (ngSubmit)="isEdit ? editUser(): addNewUser()">
         <nz-form-item>
             <nz-form-control>
                 <nz-input-group nzPrefixIcon="user">
@@ -31,7 +31,7 @@
         name?.touched &&
         userForm.controls['Name'].hasError('invalidSymbols')
       " class="error-message">
-            Only letters are allowed
+            Example: Name123 (only letters followed by numbers allowed)
         </p>
         <p *ngIf="
         name?.touched && userForm.controls['Name'].hasError('required')

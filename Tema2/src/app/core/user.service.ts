@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map, filter,tap } from 'rxjs/operators';
 import { User } from './user.interface';
+import { Input } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  @Input() user: User | null = null;
   private users: User[] = [];
   private usersUrl: string = 'assets/users.json';
 
@@ -36,6 +38,7 @@ export class UserService {
   }
   createNewUser(email:string,name:string,age:number,address:string): Observable<any> {
     const newUser = {
+      id:this.users.length+1,
       email: email,
       name: name,
       age: age, // Example age
@@ -44,5 +47,15 @@ export class UserService {
     this.users.push(newUser);
     console.log(this.users);
     return of(newUser);
+  }
+  updateUser(user:User):Observable<User>
+  {
+    return new Observable((observer) => {
+      const index = this.users.findIndex(u => u.id === user.id);
+      this.users[index] = user;
+      observer.next(user);
+      console.log(this.users[index]);
+      observer.complete();
+    });
   }
 }

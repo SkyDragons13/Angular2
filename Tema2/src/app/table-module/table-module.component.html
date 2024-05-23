@@ -28,7 +28,7 @@
               nzType="edit"
               nzTheme="outline"
               style="cursor: pointer;"
-              (click)="toggleAddUser()"
+              (click)="editUser(data)"
             ></span>
           </td>
         </tr>
@@ -42,6 +42,7 @@
     <button nz-button nzType="primary" (click)="toggleAddUser()">
       Add New User
     </button>
+  
     <app-create-user-form *ngIf="isAddNewUserFormVisible"></app-create-user-form>
   </div>
   

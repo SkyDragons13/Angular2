@@ -13,7 +13,7 @@ import { TableRoutingModule } from './table-routing.module';
 import { TableModuleComponent } from './table-module.component';
 import { CreateUserFormComponent } from '../create-user-form/create-user-form.component';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-
+import { NzModalModule } from 'ng-zorro-antd/modal';
 @NgModule({
   declarations: [TableModuleComponent, CreateUserFormComponent],
   imports: [
@@ -29,6 +29,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzIconModule,
     ReactiveFormsModule,
     NzPaginationModule,
+    NzModalModule,
   ],
 })
 export class TableModule {}

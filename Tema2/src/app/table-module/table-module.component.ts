@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../core/user.interface';
 import { UserService } from '../core/user.service';
 import { UserUpdateService } from '../core/user.update.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
+import { CreateUserFormComponent } from '../create-user-form/create-user-form.component';
 
 @Component({
   selector: 'app-table',
@@ -14,12 +16,14 @@ export class TableModuleComponent implements OnInit {
   users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   isAddNewUserFormVisible: boolean = false;
   isLoading: boolean = true;
-  pageIndex: number = 1;  // Initialize the page index to 1
+  pageIndex: number = 1;
 
   constructor(
     private userService: UserService,
     private userUpdateService: UserUpdateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private modalService: NzModalService,
+    private viewContainerRef: ViewContainerRef,
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +49,21 @@ export class TableModuleComponent implements OnInit {
   }
 
   toggleAddUser() {
-    this.isAddNewUserFormVisible = true;
+    this.modalService.create({
+      nzTitle: 'Add User',
+      nzContent: CreateUserFormComponent,
+      nzData: { isEdit: false },
+    });
+  }
+
+  editUser(data: User) {
+    this.modalService.create({
+      nzTitle: 'Edit User',
+      nzContent: CreateUserFormComponent,
+      nzViewContainerRef:this.viewContainerRef,
+      nzData:{data,isEdit:true},
+      nzFooter: null
+    });
   }
 
   onPageChange(pageIndex: number) {
